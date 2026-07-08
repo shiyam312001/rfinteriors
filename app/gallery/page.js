@@ -1,9 +1,5 @@
 import { createMetadata } from "@/lib/metadata";
-import {
-  galleryCategories,
-  galleryImages,
-  getGalleryCategoryCounts,
-} from "@/lib/images.server";
+import { galleryCategories, galleryImages } from "@/lib/gallery-content";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
 import SectionHeading from "@/components/SectionHeading";
@@ -17,7 +13,10 @@ export const metadata = createMetadata({
 });
 
 export default function GalleryPage() {
-  const categoryCounts = getGalleryCategoryCounts();
+  const categoryCounts = galleryImages.reduce((acc, image) => {
+    acc[image.category] = (acc[image.category] ?? 0) + 1;
+    return acc;
+  }, {});
 
   return (
     <>

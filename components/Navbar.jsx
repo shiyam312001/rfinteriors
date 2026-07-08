@@ -38,12 +38,11 @@ export default function Navbar() {
             href="/"
             className="flex items-center gap-3 font-heading text-lg font-semibold text-charcoal transition-colors hover:text-accent md:text-xl"
           >
-            <img
-              src="/logo.png"
-              alt={`${siteInfo.shortName} logo`}
-              className="h-10 w-10 rounded-full object-cover shadow-sm"
-            />
-            <span>{siteInfo.shortName}</span>
+              <img
+                src="/logo.png"
+                alt={`${siteInfo.name} logo`}
+                className="h-[40px] w-[150px] object-contain bg-transparent"
+              />
           </Link>
 
           <nav
@@ -95,12 +94,11 @@ export default function Navbar() {
       >
         <div className="mb-8 flex items-center justify-between">
           <span className="flex items-center gap-3 font-heading text-lg text-charcoal">
-            <img
-              src="/logo.png"
-              alt={`${siteInfo.shortName} logo`}
-              className="h-10 w-10 rounded-full object-cover shadow-sm"
-            />
-            <span>{siteInfo.shortName}</span>
+              <img
+                src="/logo.png"
+                alt={`${siteInfo.name} logo`}
+                className="h-auto w-[200px]  bg-transparent"
+              />
           </span>
           <button
             type="button"

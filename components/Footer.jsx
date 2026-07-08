@@ -9,14 +9,11 @@ export default function Footer() {
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-4 lg:px-8">
         <div className="lg:col-span-2">
           <div className="flex items-center gap-3">
-            <img
-              src="/logo.png"
-              alt={`${siteInfo.shortName} logo`}
-              className="h-14 w-14 rounded-full object-cover shadow-sm"
-            />
-            <h2 className="font-heading text-2xl font-semibold text-charcoal">
-              {siteInfo.shortName}
-            </h2>
+           <img
+                src="/logo.png"
+                alt={`${siteInfo.name} logo`}
+                className="h-auto w-[180px]  bg-transparent"
+              />
           </div>
           <p className="mt-4 max-w-md text-sm leading-7 text-muted">
             {siteInfo.description}
