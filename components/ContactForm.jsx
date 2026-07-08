@@ -1,27 +1,51 @@
 "use client";
 
 import { useState } from "react";
-import { siteInfo } from "@/lib/content";
 import Button from "./Button";
 
 export default function ContactForm({ compact = false }) {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitState, setSubmitState] = useState("idle");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const name = formData.get("name");
-    const phone = formData.get("phone");
-    const service = formData.get("service");
-    const message = formData.get("message");
+    const payload = {
+      name: formData.get("name")?.toString().trim() || "",
+      phone: formData.get("phone")?.toString().trim() || "",
+      service: formData.get("service")?.toString().trim() || "",
+      message: formData.get("message")?.toString().trim() || "",
+    };
 
-    const text = encodeURIComponent(
-      `Hi, I'm ${name}. I'm interested in ${service}. Phone: ${phone}. Message: ${message}`,
-    );
+    setSubmitState("submitting");
+    setFeedbackMessage("");
 
-    window.open(`https://wa.me/${siteInfo.whatsapp}?text=${text}`, "_blank");
-    setSubmitted(true);
-    event.currentTarget.reset();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to send your message right now.");
+      }
+
+      setSubmitState("success");
+      setFeedbackMessage("Thanks! Your enquiry has been sent successfully.");
+      event.currentTarget.reset();
+    } catch (error) {
+      setSubmitState("error");
+      setFeedbackMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to send your message right now.",
+      );
+    }
   }
 
   return (
@@ -95,12 +119,16 @@ export default function ContactForm({ compact = false }) {
       </div>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button type="submit" size="md">
-          Send via WhatsApp
+        <Button type="submit" size="md" disabled={submitState === "submitting"}>
+          {submitState === "submitting" ? "Sending..." : "Send Enquiry"}
         </Button>
-        {submitted ? (
-          <p className="text-sm text-muted">
-            Opening WhatsApp with your message…
+        {feedbackMessage ? (
+          <p
+            className={`text-sm ${
+              submitState === "error" ? "text-red-600" : "text-muted"
+            }`}
+          >
+            {feedbackMessage}
           </p>
         ) : null}
       </div>

@@ -1,4 +1,4 @@
-import { Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { createMetadata } from "@/lib/metadata";
 import { siteInfo } from "@/lib/content";
 import FadeIn from "@/components/FadeIn";
@@ -42,6 +42,10 @@ export default function ContactPage() {
                   <Button href={`tel:+91${siteInfo.phone}`} variant="outline">
                     <Phone className="h-4 w-4" />
                     Call +91 {siteInfo.phone}
+                  </Button>
+                  <Button href={`mailto:${siteInfo.email}`} external>
+                    <Mail className="h-4 w-4" />
+                    Email {siteInfo.email}
                   </Button>
                   <Button href={siteInfo.whatsappUrl} external>
                     Chat on WhatsApp

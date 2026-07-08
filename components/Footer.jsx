@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
 import { navLinks, siteInfo } from "@/lib/content";
 
@@ -66,6 +66,15 @@ export default function Footer() {
                 +91 {siteInfo.phone}
               </a>
             </li>
+            <li>
+              <a
+                href={`mailto:${siteInfo.email}`}
+                className="inline-flex items-center gap-2 transition-colors hover:text-accent"
+              >
+                <Mail className="h-4 w-4 text-accent" />
+                {siteInfo.email}
+              </a>
+            </li>
             <li>{siteInfo.workingHours.weekdays}</li>
             <li>{siteInfo.workingHours.sunday}</li>
           </ul>
@@ -77,7 +86,16 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {siteInfo.name}. All rights reserved.
           </p>
-          <p>Premium PVC & UPVC interiors across Chennai.</p>
+          <p>
+            <a
+              href={siteInfo.developerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-accent"
+            >
+              Developed By AEDEVS
+            </a>
+          </p>
         </div>
       </div>
     </footer>
